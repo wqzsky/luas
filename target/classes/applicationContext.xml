@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- 
+	1:创建bean，依赖注入
+	dao和service中的bean由spring容器创建，controller中的bean由springmvc创建
+	扫描多个包使用分号分割
+	-->
+	<context:component-scan base-package="cn.itlaobing.services;cn.itlaobing.dao"/>
+	
+	<!--2： 创建数据源 -->
+	<context:property-placeholder location="classpath:db.properties"/>
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClass}"></property>
+		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+		<property name="user" value="${jdbc.user}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		<!-- 初始化时的连接数，取值应该在maxPoolSize和minPoolSize之间，默认是3 -->
+		<property name="initialPoolSize" value="${jdbc.initialPoolSize}"></property>
+		<!-- 连接池中保留的最大连接数量，默认15 -->
+		<property name="maxPoolSize" value="${jdbc.maxPoolSize}"></property>
+		<!-- 连接池中保留的最小连接数量，默认3 -->
+		<property name="minPoolSize" value="${jdbc.minPoolSize}"></property>
+		<!-- 当连接池中的连接耗尽的时候，c3p0一次同时获取的连接数，默认3 -->
+		<property name="acquireIncrement" value="${jdbc.acquireIncrement}"></property>
+	</bean>
+
+	<!-- 3: spring整合mybatis，创建sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 3.1注入数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 3.2注入配置文件 -->
+		<property name="configLocation" value="classpath:mybatisConfig.xml"></property>
+		<!-- 3.3注入映射文件 -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+	</bean>
+	<!-- 将mybatis生成的dao的代理对象交给spring容器管理 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="cn.itlaobing.dao"></property>
+	</bean>
+	
+	<!-- 4:事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<aop:config>
+		<aop:pointcut expression="execution(* cn.itlaobing.services..*(..))" id="txPoint"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
+	</aop:config>
+	<tx:advice id="txAdvice">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED"/>
+			<tx:method name="select*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+</beans>
+
