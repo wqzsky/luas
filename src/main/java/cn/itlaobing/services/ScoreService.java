@@ -16,7 +16,14 @@ public class ScoreService {
 	public void insert(ScoreModel scoreModel) {
 		scoreDao.insert(scoreModel);
 	}
-	public List<ScoreModel> selectAll() {
+	
+	public List<ScoreModel> selectAll(){
 		return scoreDao.selectAll();
 	}
+	
+	public ScoreModel selectById(String id){
+		return scoreDao.selectById(id);
+	}
+	
+	
 }

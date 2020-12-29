@@ -7,6 +7,10 @@
 		INSERT INTO score(stuName,gender,courseName,courseScore)VALUES(#{stuName},#{gender},#{courseName},#{courseScore})
 	</insert>
 	<select id="selectAll" resultType="cn.itlaobing.models.ScoreModel">
-		select * from score
+		SELECT * FROM score
 	</select>
+	<select id="selectById" resultType="cn.itlaobing.models.ScoreModel" parameterType="string">
+		SELECT * FROM score where id=#{value}
+	</select>
+	
 </mapper>
