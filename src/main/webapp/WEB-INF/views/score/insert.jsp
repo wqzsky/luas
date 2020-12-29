@@ -8,6 +8,7 @@
 </head>
 <body>
 添加学生成绩<br >
+<a href="http://localhost:8888/luas/score/selectAll">显示全部</a> 
 <form action="${pageContext.request.contextPath }/score/insert" method="post">
 学生姓名<input type="text" name="stuName" /><br />
 学生性别<input type="radio" name="gender" value="男">男

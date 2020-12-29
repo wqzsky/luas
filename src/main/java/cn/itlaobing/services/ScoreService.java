@@ -1,5 +1,7 @@
 package cn.itlaobing.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.itlaobing.dao.ScoreDao;
@@ -13,5 +15,8 @@ public class ScoreService {
 	
 	public void insert(ScoreModel scoreModel) {
 		scoreDao.insert(scoreModel);
+	}
+	public List<ScoreModel> selectAll() {
+		return scoreDao.selectAll();
 	}
 }

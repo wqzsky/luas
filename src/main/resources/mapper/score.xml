@@ -6,4 +6,7 @@
 	<insert id="insert" parameterType="cn.itlaobing.models.ScoreModel">
 		INSERT INTO score(stuName,gender,courseName,courseScore)VALUES(#{stuName},#{gender},#{courseName},#{courseScore})
 	</insert>
+	<select id="selectAll" resultType="cn.itlaobing.models.ScoreModel">
+		select * from score
+	</select>
 </mapper>
