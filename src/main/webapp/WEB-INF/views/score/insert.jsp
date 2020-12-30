@@ -73,11 +73,9 @@ function check(){
 					    <label>
 					      <input type="radio" name="gender" id="male" value="男" <c:if test="${scoreModel.gender=='男' }">checked="checked"</c:if>>男
 					    </label>
-					</div>
-					<div class="radio">
 					    <label>
 					      <input type="radio" name="gender" id="female" value="女" <c:if test="${scoreModel.gender=='女' }">checked="checked"</c:if>>女
-					      <div class="errornotify" id="divgender"></div>
+					      <div class="errornotify" style="display:inline;" id="divgender"></div>
 					    </label>
 					</div>
 			    </div>
