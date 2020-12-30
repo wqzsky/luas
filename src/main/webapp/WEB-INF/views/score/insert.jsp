@@ -15,7 +15,7 @@ function check(){
 		document.getElementById("divgender").innerHTML="性别必须填写";
 		return false;
 	}else{
-		document.getElementById("divgender").innerHTML="<img src='${pageContext.request.contextPath }/images/duihao.png' width='30'>";
+		document.getElementById("divgender").innerHTML="";
 	}
 	//验证成绩是否填写
 	var courseScore = document.getElementById("courseScore");
@@ -28,17 +28,96 @@ function check(){
 	return true;
 }
 </script>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+<style>
+.errornotify{
+	color: #b73c00;
+	font-size: 14px;
+	font-weight: bold;
+}
+</style>
 </head>
 <body>
-<a href="${pageContext.request.contextPath }/score/selectAll">成绩列表</a>
-添加学生成绩<br >
-<form action="${pageContext.request.contextPath }/score/insert" method="post">
-学生姓名<input type="text" name="stuName" value="${scoreModel.stuName }"/>${stuName }<br />
-学生性别<input type="radio" name="gender" id="male" value="男" <c:if test="${scoreModel.gender=='男' }">checked="checked"</c:if>>男
-      <input type="radio" name="gender" id="female" value="女" <c:if test="${scoreModel.gender=='女' }">checked="checked"</c:if>>女<div id="divgender" style="display: inline"></div><br />
-课程名称<input type="text" name="courseName" value="${scoreModel.courseName }"><br >
-课程成绩<input type="number" name="courseScore" id="courseScore" value="${scoreModel.courseScore }">${ courseScore}<div style="display: inline" id="divcourseScore"></div><br>
-<input type="submit" value="保存成绩" onclick="return check()">
-</form>
+<div class="container">
+	<div class="row" style="height: 120px;">
+		<div class="col-md-3"><img src="${pageContext.request.contextPath }/images/logo.png" ></div>
+		<div class="col-md-3" style="font-family: 微软雅黑;font-size: 20px;color: #333;"><br /><br /><br />|&nbsp;&nbsp;统一身份认证登录</div>
+		<div class="col-md-3"></div>
+		<div class="col-md-3"><img src="${pageContext.request.contextPath }/images/login_r.png" ></div>
+	</div>
+	<div class="row">
+		<div class="col-md-12" style="background-color: orange;height: 30px; line-height:30px; margin: 10px 0px;">
+			<a href="${pageContext.request.contextPath }/score/selectAll">成绩列表</a>&nbsp;
+			<a href="${pageContext.request.contextPath }/score/preparedInsert">添加成绩</a>&nbsp;
+			<a href="${pageContext.request.contextPath }/score/search">查询成绩</a>&nbsp;
+			<a href="${pageContext.request.contextPath }/score/selectAll">成绩列表</a>&nbsp;
+			<a href="${pageContext.request.contextPath }/score/selectAll">成绩列表</a>&nbsp;
+			<a href="${pageContext.request.contextPath }/score/selectAll">成绩列表</a>&nbsp;
+			<a href="${pageContext.request.contextPath }/score/selectAll">成绩列表</a>&nbsp;
+			<a href="${pageContext.request.contextPath }/score/selectAll">成绩列表</a>&nbsp;
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<form class="form-horizontal" action="${pageContext.request.contextPath }/score/insert" method="post">
+			  <div class="form-group">
+			    <label for="inputEmail3" class="col-sm-2 control-label">学生姓名</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control"  name="stuName" value="${scoreModel.stuName }" placeholder="学生姓名"/><div class="errornotify">${stuName }</div>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="inputEmail3" class="col-sm-2 control-label">学生性别</label>
+			    <div class="col-sm-10">
+			    	<div class="radio">
+					    <label>
+					      <input type="radio" name="gender" id="male" value="男" <c:if test="${scoreModel.gender=='男' }">checked="checked"</c:if>>男
+					    </label>
+					</div>
+					<div class="radio">
+					    <label>
+					      <input type="radio" name="gender" id="female" value="女" <c:if test="${scoreModel.gender=='女' }">checked="checked"</c:if>>女
+					      <div class="errornotify" id="divgender"></div>
+					    </label>
+					</div>
+			    </div>
+			  </div>
+			  
+			  <div class="form-group">
+			    <label for="inputEmail3" class="col-sm-2 control-label">课程名称</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" name="courseName" value="${scoreModel.courseName }" placeholder="课程名称">
+			    </div>
+			  </div>			  
+
+			  <div class="form-group">
+			    <label for="inputEmail3" class="col-sm-2 control-label">课程成绩</label>
+			    <div class="col-sm-10">
+			       <input type="number" class="form-control" name="courseScore" id="courseScore" value="${scoreModel.courseScore }" placeholder="课程成绩">
+			       <div class="errornotify">${ courseScore}</div><div class="errornotify" style="display: inline" id="divcourseScore"></div>
+			    </div>
+			  </div>	
+
+			  
+			  <div class="form-group">
+			    <div class="col-sm-offset-2 col-sm-10">
+			      <button type="submit" class="btn btn-default" onclick="return check()">保存成绩</button>
+			    </div>
+			  </div>
+			</form>
+		</div>
+		<div class="col-md-6">
+			<img src="${pageContext.request.contextPath }/images/default_bg.jpg">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12" style="background-color: #c8c8c8;height: 5px;margin-top: 10px;"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-12" style="height: 100px;line-height: 100px;text-align: center;">
+			联系我们 信息中心 版权所有©2019-2020 请使用 IE浏览器IE8+、谷歌浏览器、firefox浏览器，360浏览器(极速模式)
+		</div>
+	</div>
+</div>
 </body>
 </html>

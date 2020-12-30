@@ -12,5 +12,11 @@
 	<select id="selectById" resultType="cn.itlaobing.models.ScoreModel" parameterType="string">
 		SELECT * FROM score where id=#{value}
 	</select>
+	<delete id="delete" parameterType="String">
+		delete from score where id=#{value}
+	</delete>
+	<update id="update" parameterType="cn.itlaobing.models.ScoreModel" >
+		update score set stuName=#{stuName},gender=#{gender},courseName=#{courseName},courseScore=#{courseScore} where id=#{id}
+	</update>
 	
 </mapper>

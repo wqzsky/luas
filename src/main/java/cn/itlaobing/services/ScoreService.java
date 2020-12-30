@@ -25,5 +25,13 @@ public class ScoreService {
 		return scoreDao.selectById(id);
 	}
 	
+	public void deleteById(String id) {
+		scoreDao.delete(id);
+	}
+	
+	public void updateById(ScoreModel scoreModel) {
+		scoreDao.update(scoreModel);
+	}
+	
 	
 }

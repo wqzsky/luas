@@ -57,6 +57,8 @@ public class ScoreController {
 		return "score/search";
 	}
 	
+
+	
 	@RequestMapping("/selectById")
 	public String selectById(String id,Model model) {
 		ScoreModel scoreModel = scoreService.selectById(id);
@@ -66,5 +68,32 @@ public class ScoreController {
 		model.addAttribute("id", id);
 		model.addAttribute("scoreModel", scoreModel);
 		return "score/search";
+	}	
+	
+	
+	@RequestMapping("/updateShow")
+	public String updateShow(String id,Model model) {
+		ScoreModel scoreModel = scoreService.selectById(id);
+		if(scoreModel==null) {
+			model.addAttribute("message", "查无此人");
+		}
+		model.addAttribute("id", id);
+		model.addAttribute("scoreModel", scoreModel);
+		return "score/update";
+	}	
+	
+	
+	@RequestMapping("/deleteById")
+	public String deleteById(String id) {
+		scoreService.deleteById(id);
+		return "redirect:/score/selectAll";
+	}
+	
+	
+	@RequestMapping("/updateById")
+	public String updateById(ScoreModel scoreModel, Model model) {
+		model.addAttribute("scoreModel", scoreModel);
+		scoreService.updateById(scoreModel);
+		return "redirect:/score/selectAll";
 	}
 }

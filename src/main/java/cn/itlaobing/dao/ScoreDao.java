@@ -7,5 +7,7 @@ public interface ScoreDao {
 	public abstract void insert(ScoreModel scoreModel);
 	public abstract List<ScoreModel> selectAll() ;
 	public abstract ScoreModel selectById(String id) ;
+	public abstract void delete(String id);
+	public abstract void update(ScoreModel scoreModel);
 	
 }

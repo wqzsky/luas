@@ -8,15 +8,15 @@ import org.hibernate.validator.constraints.Length;
 
 public class ScoreModel {
 	private int id;
-	@NotNull(message="ÓÃ»§Ãû²»ÔÊĞíÎª¿Õ")
-	@Length(max=4,min=2,message="ÇëÌîĞ´ÕıÈ·µÄĞÕÃû")
+	@NotNull(message="ç”¨æˆ·åä¸å…è®¸ä¸ºç©º")
+	@Length(max=4,min=2,message="è¯·å¡«å†™æ­£ç¡®çš„å§“å")
 	private String stuName;
 	
 	private String gender;
 	private String courseName;
 	
-	@Max(value=100,message="³É¼¨²»ÔÊĞí³¬¹ı100")
-	@Min(value=0,message="³É¼¨²»ÔÊĞíĞ¡ÓÚ0")
+	@Max(value=100,message="æˆç»©ä¸å…è®¸è¶…è¿‡100")
+	@Min(value=0,message="æˆç»©ä¸å…è®¸å°äº0")
 	private int courseScore;
 	public int getId() {
 		return id;
