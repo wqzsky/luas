@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import cn.itlaobing.models.ScoreModel;
 import cn.itlaobing.services.ScoreService;
@@ -24,9 +27,21 @@ public class ScoreController {
 	
 	//用于添加成绩的方法
 	@RequestMapping("/insert")
-	public String insert(ScoreModel scoreModel) {
+	public String insert(@Validated ScoreModel scoreModel, BindingResult br,Model model) {
+		if(br.hasErrors()) {
+			List<FieldError> errors = br.getFieldErrors();
+			for (int i = 0; i < errors.size(); i++) {
+				String field =  errors.get(i).getField();
+				String message = errors.get(i).getDefaultMessage();
+				model.addAttribute(field, message);
+			}
+			model.addAttribute("scoreModel", scoreModel);
+			return "score/insert";
+		}
+		
 		System.out.println(scoreModel.getStuName());
 		scoreService.insert(scoreModel);
+		
 		return "redirect:/score/preparedInsert";//成绩添加完成后，跳转到添加成绩界面
 	}
 	
